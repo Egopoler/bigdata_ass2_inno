@@ -2,6 +2,7 @@ services:
   cluster-master:
     image: firasj/spark-docker-cluster
     container_name: cluster-master
+    platform: linux/amd64
     ports:
       - "8088:8088"
       - "4040:4040"
@@ -26,6 +27,7 @@ services:
   cluster-slave-1:
     image: firasj/spark-docker-cluster
     container_name: cluster-slave-1
+    platform: linux/amd64
     networks:
       - spark-cluster
     hostname: cluster-slave-1
@@ -42,8 +44,9 @@ services:
   cassandra-server:
     image: cassandra
     container_name: cassandra-server
+    platform: linux/amd64
     ports:
-      - "7000:7000"
+      - "7001:7000"
     networks:
       - spark-cluster
     

@@ -10,4 +10,17 @@ export PYSPARK_DRIVER_PYTHON=$(which python)
 # Python of the excutor (./.venv/bin/python)
 export PYSPARK_PYTHON=./.venv/bin/python
 
-spark-submit --master yarn --archives /app/.venv.tar.gz#.venv query.py  $1
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 <query>"
+  exit 1
+fi
+
+# Run the PySpark application on YARN
+spark-submit --master yarn --deploy-mode cluster --archives /app/.venv.tar.gz#.venv app/query.py <<< "$1"
+
+
+
+
+
+

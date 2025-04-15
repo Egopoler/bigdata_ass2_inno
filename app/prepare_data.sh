@@ -1,19 +1,20 @@
 #!/bin/bash
 
+# Activate the Python virtual environment
 source .venv/bin/activate
 
-
-# Python of the driver (/app/.venv/bin/python)
+# Set the Python executable for PySpark driver
 export PYSPARK_DRIVER_PYTHON=$(which python) 
 
-
+# Unset PYSPARK_PYTHON to use the default Python
 unset PYSPARK_PYTHON
 
-# DOWNLOAD a.parquet or any parquet file before you run this
-
-hdfs dfs -put -f a.parquet / && \
+# Upload the parquet file to HDFS
+hdfs dfs -put -f b.parquet / && \
+    # Run the data preparation script
     spark-submit prepare_data.py && \
     echo "Putting data to hdfs" && \
+    # Upload the prepared data to HDFS
     hdfs dfs -put data / && \
     hdfs dfs -ls /data && \
     hdfs dfs -ls /index/data && \
